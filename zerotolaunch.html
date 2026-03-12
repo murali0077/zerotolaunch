@@ -1,0 +1,2488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero to Launch — Your 90-Day Plan</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --void: #080808;
+            --surface: #0f0f0f;
+            --card: #141414;
+            --card2: #1a1a1a;
+            --border: #242424;
+            --border2: #2e2e2e;
+            --text: #e8e4de;
+            --muted: #5a5650;
+            --muted2: #7a766e;
+            --gold: #d4a843;
+            --gold-pale: rgba(212, 168, 67, 0.08);
+            --gold-border: rgba(212, 168, 67, 0.2);
+            --green: #3a8a5a;
+            --green-pale: rgba(58, 138, 90, 0.08);
+            --green-border: rgba(58, 138, 90, 0.2);
+            --red: #c04040;
+            --red-pale: rgba(192, 64, 64, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--void);
+            color: var(--text);
+            font-family: 'Syne', sans-serif;
+            font-weight: 400;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* GRAIN */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--void);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border2);
+            border-radius: 3px;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 56px;
+            background: rgba(8, 8, 8, 0.92);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            font-family: 'Instrument Serif', serif;
+            font-size: 20px;
+            font-style: italic;
+            color: var(--gold);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--muted2);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .nav-cta {
+            background: var(--gold);
+            color: var(--void) !important;
+            padding: 8px 18px;
+            border-radius: 4px;
+            font-weight: 600 !important;
+            font-size: 11px !important;
+        }
+
+        .nav-cta:hover {
+            opacity: 0.9;
+            color: var(--void) !important;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 100px 80px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 800px 500px at 60% 40%, rgba(212, 168, 67, 0.05) 0%, transparent 70%),
+                radial-gradient(ellipse 400px 400px at 10% 80%, rgba(58, 138, 90, 0.04) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-grid-lines {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 80px 80px;
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            position: relative;
+            max-width: 1100px;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 36px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.2s forwards;
+        }
+
+        .hero-tag::before {
+            content: '';
+            width: 32px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .hero h1 {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(52px, 7vw, 100px);
+            font-weight: 400;
+            line-height: 1.0;
+            letter-spacing: -3px;
+            margin-bottom: 32px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.4s forwards;
+        }
+
+        .hero h1 .outline {
+            -webkit-text-stroke: 1px rgba(232, 228, 222, 0.3);
+            color: transparent;
+        }
+
+        .hero h1 .gold {
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        .hero-desc {
+            font-size: 16px;
+            color: var(--muted2);
+            max-width: 520px;
+            line-height: 1.9;
+            margin-bottom: 48px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.6s forwards;
+        }
+
+        .hero-cards {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.8s forwards;
+        }
+
+        .hero-pill {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 12px 20px;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-pill .icon {
+            font-size: 16px;
+        }
+
+        .hero-pill .label {
+            color: var(--text);
+        }
+
+        .hero-pill .val {
+            color: var(--muted2);
+            font-size: 12px;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 40px;
+            left: 80px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--muted);
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeIn 1s ease 1.5s forwards;
+        }
+
+        .scroll-line {
+            width: 40px;
+            height: 1px;
+            background: linear-gradient(90deg, var(--border2), transparent);
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* SECTION */
+        .section {
+            padding: 100px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            margin-bottom: 64px;
+        }
+
+        .eyebrow {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .eyebrow::before {
+            content: '';
+            width: 24px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        h2.title {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(36px, 4vw, 60px);
+            font-weight: 400;
+            line-height: 1.05;
+            letter-spacing: -1.5px;
+        }
+
+        h2.title em {
+            font-style: italic;
+            color: var(--gold);
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: var(--muted2);
+            max-width: 560px;
+            line-height: 1.9;
+            margin-top: 16px;
+        }
+
+        /* REALITY CHECK */
+        .reality-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        .reality-col {
+            padding: 40px;
+            background: var(--card);
+        }
+
+        .reality-col.wrong {
+            background: rgba(192, 64, 64, 0.04);
+        }
+
+        .reality-col.right {
+            background: rgba(58, 138, 90, 0.04);
+        }
+
+        .reality-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 28px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .reality-head .icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .wrong .reality-head .icon {
+            background: var(--red-pale);
+        }
+
+        .right .reality-head .icon {
+            background: var(--green-pale);
+        }
+
+        .reality-head .label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .wrong .reality-head .label {
+            color: var(--red);
+        }
+
+        .right .reality-head .label {
+            color: var(--green);
+        }
+
+        .reality-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 14px;
+            font-size: 13.5px;
+            color: var(--muted2);
+            line-height: 1.7;
+            align-items: flex-start;
+        }
+
+        .reality-item .bullet {
+            font-size: 12px;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+
+        .wrong .reality-item .bullet {
+            color: var(--red);
+        }
+
+        .right .reality-item .bullet {
+            color: var(--green);
+        }
+
+        /* THE STRATEGY */
+        .strategy-block {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .strategy-top {
+            background: var(--gold);
+            padding: 28px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .strategy-top h3 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 28px;
+            color: var(--void);
+            letter-spacing: -0.5px;
+        }
+
+        .strategy-top p {
+            font-size: 13px;
+            color: rgba(8, 8, 8, 0.6);
+            font-family: 'IBM Plex Mono', monospace;
+            letter-spacing: 1px;
+        }
+
+        .strategy-body {
+            padding: 40px;
+        }
+
+        .dual-track {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .track {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 28px;
+        }
+
+        .track-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .track.build .track-label {
+            color: var(--green);
+        }
+
+        .track.sell .track-label {
+            color: var(--gold);
+        }
+
+        .track-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: 22px;
+            margin-bottom: 16px;
+            letter---spacing: -0.3px;
+        }
+
+        .track-item {
+            display: flex;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--muted2);
+            margin-bottom: 10px;
+            line-height: 1.6;
+            align-items: flex-start;
+        }
+
+        .track-item::before {
+            content: '→';
+            font-size: 11px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .build .track-item::before {
+            color: var(--green);
+        }
+
+        .sell .track-item::before {
+            color: var(--gold);
+        }
+
+        /* 90 DAY PLAN */
+        .phase-tabs {
+            display: flex;
+            gap: 0;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 6px;
+            margin-bottom: 32px;
+            width: fit-content;
+        }
+
+        .ptab {
+            padding: 10px 24px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--muted2);
+            border: none;
+            background: none;
+        }
+
+        .ptab.active {
+            background: var(--gold);
+            color: var(--void);
+        }
+
+        .phase-panel {
+            display: none;
+        }
+
+        .phase-panel.active {
+            display: block;
+        }
+
+        .week-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .week-row {
+            display: grid;
+            grid-template-columns: 100px 1fr 1fr 1fr;
+            gap: 2px;
+        }
+
+        .week-cell {
+            background: var(--card);
+            padding: 20px 24px;
+            border-radius: 0;
+            font-size: 13px;
+        }
+
+        .week-cell:first-child {
+            background: var(--surface);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .week-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .week-num {
+            font-family: 'Instrument Serif', serif;
+            font-size: 28px;
+            color: var(--muted);
+            line-height: 1;
+        }
+
+        .col-head {
+            background: var(--surface);
+            padding: 14px 24px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .col-head.build {
+            color: var(--green);
+        }
+
+        .col-head.sell {
+            color: var(--gold);
+        }
+
+        .col-head.post {
+            color: #8888dd;
+        }
+
+        .cell-task {
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 4px;
+            font-size: 13px;
+        }
+
+        .cell-detail {
+            font-size: 12px;
+            color: var(--muted2);
+            line-height: 1.6;
+        }
+
+        .week-row:first-child .week-cell {
+            border-radius: 8px 0 0 0;
+        }
+
+        .week-row:first-child .week-cell:last-child {
+            border-radius: 0 8px 0 0;
+        }
+
+        .week-row:last-child .week-cell:first-child {
+            border-radius: 0 0 0 8px;
+        }
+
+        .week-row:last-child .week-cell:last-child {
+            border-radius: 0 0 8px 0;
+        }
+
+        /* CONTENT ENGINE */
+        .content-engine {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        .post-formula {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .pf-head {
+            background: var(--surface);
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .pf-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 6px;
+        }
+
+        .pf-sub {
+            font-family: 'Instrument Serif', serif;
+            font-size: 22px;
+            letter-spacing: -0.3px;
+        }
+
+        .formula-item {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            transition: background 0.2s;
+            cursor: default;
+        }
+
+        .formula-item:hover {
+            background: var(--surface);
+        }
+
+        .formula-item:last-child {
+            border-bottom: none;
+        }
+
+        .fi-num {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            color: var(--muted);
+            min-width: 20px;
+            margin-top: 2px;
+        }
+
+        .fi-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .fi-template {
+            font-size: 12px;
+            color: var(--muted2);
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .fi-goal {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            color: var(--gold);
+            margin-top: 4px;
+            letter-spacing: 1px;
+        }
+
+        /* BUILD IN PUBLIC */
+        .bip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .bip-card {
+            background: var(--card);
+            padding: 32px;
+            transition: background 0.2s;
+        }
+
+        .bip-card:hover {
+            background: var(--card2);
+        }
+
+        .bip-week {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--muted);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .bip-post {
+            font-family: 'Instrument Serif', serif;
+            font-size: 18px;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            letter-spacing: -0.3px;
+        }
+
+        .bip-result {
+            font-size: 12px;
+            color: var(--green);
+            font-family: 'IBM Plex Mono', monospace;
+            letter-spacing: 1px;
+            border-top: 1px solid var(--border);
+            padding-top: 12px;
+            margin-top: 12px;
+        }
+
+        /* PRODUCT LAUNCH */
+        .launch-timeline {
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .launch-timeline::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, var(--gold), rgba(212, 168, 67, 0.1));
+        }
+
+        .lt-item {
+            position: relative;
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .lt-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .lt-dot {
+            position: absolute;
+            left: -29px;
+            top: 5px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--void);
+            border: 1.5px solid var(--gold);
+        }
+
+        .lt-dot.filled {
+            background: var(--gold);
+        }
+
+        .lt-when {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .lt-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: 24px;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+        }
+
+        .lt-body {
+            font-size: 13.5px;
+            color: var(--muted2);
+            line-height: 1.9;
+            max-width: 640px;
+        }
+
+        .lt-body strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .lt-tasks {
+            margin-top: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .lt-task {
+            display: flex;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--muted2);
+            align-items: flex-start;
+        }
+
+        .lt-task::before {
+            content: '✦';
+            font-size: 10px;
+            color: var(--gold);
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+
+        /* PRICING */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .price-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.25s;
+        }
+
+        .price-card:hover {
+            border-color: var(--gold-border);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .price-card.featured {
+            border-color: var(--gold);
+            background: linear-gradient(160deg, rgba(212, 168, 67, 0.06), var(--card));
+        }
+
+        .price-head {
+            padding: 28px 28px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .price-phase {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        .featured .price-phase {
+            color: var(--gold);
+        }
+
+        .price-name {
+            font-family: 'Instrument Serif', serif;
+            font-size: 22px;
+            letter-spacing: -0.3px;
+            margin-bottom: 6px;
+        }
+
+        .price-range {
+            font-family: 'Instrument Serif', serif;
+            font-size: 40px;
+            font-style: italic;
+            color: var(--gold);
+            line-height: 1;
+            margin: 12px 0 4px;
+        }
+
+        .price-note {
+            font-size: 12px;
+            color: var(--muted2);
+        }
+
+        .price-body {
+            padding: 24px 28px;
+        }
+
+        .price-item {
+            display: flex;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--muted2);
+            margin-bottom: 10px;
+            line-height: 1.6;
+            align-items: flex-start;
+        }
+
+        .price-item::before {
+            content: '→';
+            color: var(--gold);
+            font-size: 11px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .price-when {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        /* REVENUE PROJECTION */
+        .revenue-table {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .rt-head {
+            display: grid;
+            grid-template-columns: 100px 1fr 100px 100px 120px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .rt-h {
+            padding: 14px 20px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .rt-row {
+            display: grid;
+            grid-template-columns: 100px 1fr 100px 100px 120px;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.2s;
+        }
+
+        .rt-row:last-child {
+            border-bottom: none;
+        }
+
+        .rt-row:hover {
+            background: var(--surface);
+        }
+
+        .rt-cell {
+            padding: 16px 20px;
+            font-size: 13px;
+            color: var(--muted2);
+            display: flex;
+            align-items: center;
+        }
+
+        .rt-cell.month {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .rt-cell.product {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .rt-cell.revenue {
+            font-family: 'Instrument Serif', serif;
+            font-size: 20px;
+            color: var(--gold);
+        }
+
+        .rt-cell.type {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-family: 'IBM Plex Mono', monospace;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .tag.gold {
+            background: var(--gold-pale);
+            color: var(--gold);
+            border: 1px solid var(--gold-border);
+        }
+
+        .tag.green {
+            background: var(--green-pale);
+            color: var(--green);
+            border: 1px solid var(--green-border);
+        }
+
+        .rt-foot {
+            display: grid;
+            grid-template-columns: 100px 1fr 100px 100px 120px;
+            background: var(--gold);
+            border-top: 1px solid var(--gold);
+        }
+
+        .rt-foot .rt-cell {
+            color: var(--void);
+            font-weight: 600;
+        }
+
+        .rt-foot .rt-cell.revenue {
+            font-size: 24px;
+            color: var(--void);
+        }
+
+        /* PLATFORMS */
+        .platform-rec {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px 32px;
+            display: grid;
+            grid-template-columns: 48px 1fr auto;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 8px;
+            transition: all 0.2s;
+            cursor: default;
+        }
+
+        .platform-rec:hover {
+            border-color: var(--border2);
+            background: var(--card2);
+        }
+
+        .plat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .plat-name {
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .plat-why {
+            font-size: 13px;
+            color: var(--muted2);
+            line-height: 1.6;
+        }
+
+        .plat-right {
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .plat-priority {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            padding: 4px 12px;
+            border-radius: 4px;
+            white-space: nowrap;
+            margin-bottom: 6px;
+            display: inline-block;
+        }
+
+        .priority-1 {
+            background: var(--gold-pale);
+            color: var(--gold);
+            border: 1px solid var(--gold-border);
+        }
+
+        .priority-2 {
+            background: var(--green-pale);
+            color: var(--green);
+            border: 1px solid var(--green-border);
+        }
+
+        .priority-3 {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--muted2);
+            border: 1px solid var(--border);
+        }
+
+        .plat-start {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            color: var(--muted);
+            letter-spacing: 1px;
+        }
+
+        /* MISTAKES */
+        .mistake-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .mistake-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--red);
+            border-radius: 0 8px 8px 0;
+            padding: 20px 24px;
+            display: flex;
+            gap: 14px;
+        }
+
+        .mistake-num {
+            font-family: 'Instrument Serif', serif;
+            font-size: 32px;
+            color: rgba(192, 64, 64, 0.2);
+            line-height: 1;
+            flex-shrink: 0;
+            font-style: italic;
+        }
+
+        .mistake-title {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .mistake-body {
+            font-size: 12.5px;
+            color: var(--muted2);
+            line-height: 1.7;
+        }
+
+        /* CTA SECTION */
+        .cta-section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 600px 400px at 50% 50%, rgba(212, 168, 67, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-section .inner {
+            position: relative;
+        }
+
+        .cta-section h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(36px, 4vw, 60px);
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 15px;
+            color: var(--muted2);
+            max-width: 500px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--gold);
+            color: var(--void);
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            padding: 16px 36px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(212, 168, 67, 0.25);
+        }
+
+        /* DIVIDER */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 0 80px;
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 48px 80px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        footer .logo {
+            font-family: 'Instrument Serif', serif;
+            font-size: 20px;
+            font-style: italic;
+            color: var(--gold);
+        }
+
+        footer p {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: 1px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            nav {
+                padding: 0 24px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 80px 24px 60px;
+            }
+
+            .section {
+                padding: 60px 24px;
+            }
+
+            .section-divider {
+                margin: 0 24px;
+            }
+
+            .reality-grid,
+            .dual-track,
+            .bip-grid,
+            .pricing-grid,
+            .content-engine,
+            .mistake-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .week-row {
+                grid-template-columns: 70px 1fr;
+            }
+
+            .week-row .week-cell:nth-child(3),
+            .week-row .week-cell:nth-child(4) {
+                display: none;
+            }
+
+            .rt-head,
+            .rt-row,
+            .rt-foot {
+                grid-template-columns: 80px 1fr 100px;
+            }
+
+            .rt-cell:nth-child(4),
+            .rt-h:nth-child(4) {
+                display: none;
+            }
+
+            .platform-rec {
+                grid-template-columns: 40px 1fr;
+            }
+
+            .plat-right {
+                display: none;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+                padding: 32px 24px;
+            }
+
+            .cta-section {
+                padding: 48px 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-logo">Zero → Launch</div>
+        <div class="nav-links">
+            <a href="#reality">Reality Check</a>
+            <a href="#strategy">The Strategy</a>
+            <a href="#90days">90-Day Plan</a>
+            <a href="#product">Product Launch</a>
+            <a href="#revenue">Revenue</a>
+            <a href="#start" class="nav-cta">Start Now</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-grid-lines"></div>
+        <div class="hero-inner">
+            <div class="hero-tag">Starting from zero · Complete playbook</div>
+            <h1>
+                Build Your Brand.<br>
+                <span class="outline">Launch Your</span><br>
+                <span class="gold">Product.</span> Both.
+            </h1>
+            <p class="hero-desc">You're starting with no audience — that is not a disadvantage. It is a blank canvas.
+                Here is the exact system to build your personal brand and sell your digital product simultaneously in 90
+                days.</p>
+            <div class="hero-cards">
+                <div class="hero-pill"><span class="icon">📅</span><span class="label">Timeline</span><span
+                        class="val">90 days to first sale</span></div>
+                <div class="hero-pill"><span class="icon">💰</span><span class="label">Target</span><span
+                        class="val">$1,000+ month 3</span></div>
+                <div class="hero-pill"><span class="icon">🎯</span><span class="label">Method</span><span
+                        class="val">Build in public</span></div>
+                <div class="hero-pill"><span class="icon">📦</span><span class="label">Product</span><span
+                        class="val">Your brand guide</span></div>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <div class="scroll-line"></div>Scroll to begin
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- REALITY CHECK -->
+    <section class="section" id="reality">
+        <div class="section-header">
+            <div class="eyebrow">01 — Reality Check</div>
+            <h2 class="title">The Honest Truth<br>About <em>Zero</em></h2>
+            <p class="subtitle">Starting with no audience is not the problem most people think it is. Here is what is
+                actually true — and what most "experts" won't tell you.</p>
+        </div>
+
+        <div class="reality-grid">
+            <div class="reality-col wrong">
+                <div class="reality-head">
+                    <div class="icon">✗</div>
+                    <div class="label">What Most People Do</div>
+                </div>
+                <div class="reality-item"><span class="bullet">✗</span><span>Try to sell a product before building any
+                        trust or demonstrating expertise</span></div>
+                <div class="reality-item"><span class="bullet">✗</span><span>Wait until they have "enough" followers
+                        before starting to monetize</span></div>
+                <div class="reality-item"><span class="bullet">✗</span><span>Post randomly without a system, burn out in
+                        6 weeks, and quit</span></div>
+                <div class="reality-item"><span class="bullet">✗</span><span>Treat the product and the brand as two
+                        separate things to do sequentially</span></div>
+                <div class="reality-item"><span class="bullet">✗</span><span>Focus on follower count as the primary
+                        success metric</span></div>
+                <div class="reality-item"><span class="bullet">✗</span><span>Build a perfect product in private with no
+                        audience validation</span></div>
+            </div>
+            <div class="reality-col right">
+                <div class="reality-head">
+                    <div class="icon">✓</div>
+                    <div class="label">What Actually Works</div>
+                </div>
+                <div class="reality-item"><span class="bullet">✓</span><span>Build the brand and sell the product at the
+                        same time using "build in public"</span></div>
+                <div class="reality-item"><span class="bullet">✓</span><span>Monetize at Day 60 with a waitlist — your
+                        first 10 buyers from a tiny audience</span></div>
+                <div class="reality-item"><span class="bullet">✓</span><span>Use a content system (not random posting)
+                        so consistency is built into the process</span></div>
+                <div class="reality-item"><span class="bullet">✓</span><span>Let your building journey BE your content —
+                        document everything publicly</span></div>
+                <div class="reality-item"><span class="bullet">✓</span><span>Focus on email subscribers and reply rate
+                        over social followers</span></div>
+                <div class="reality-item"><span class="bullet">✓</span><span>Validate and presell the product before
+                        building the final version</span></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- THE STRATEGY -->
+    <section class="section" id="strategy">
+        <div class="section-header">
+            <div class="eyebrow">02 — The Strategy</div>
+            <h2 class="title">Run Both Tracks<br><em>Simultaneously</em></h2>
+            <p class="subtitle">The secret is that building your brand and selling your product are not two separate
+                goals — they are the same activity when done correctly.</p>
+        </div>
+
+        <div class="strategy-block">
+            <div class="strategy-top">
+                <div>
+                    <h3>The Build-in-Public Method</h3>
+                    <p>Your journey IS your product marketing</p>
+                </div>
+                <div
+                    style="font-family:'Instrument Serif',serif;font-size:48px;color:rgba(8,8,8,0.15);font-style:italic;line-height:1;">
+                    90 days</div>
+            </div>
+            <div class="strategy-body">
+                <div class="dual-track">
+                    <div class="track build">
+                        <div class="track-label">Track A · Build Your Brand</div>
+                        <div class="track-title">Establish Authority</div>
+                        <div class="track-item">Post daily about personal branding, growth, and your methodology</div>
+                        <div class="track-item">Document what you're learning and applying in real time</div>
+                        <div class="track-item">Build your email list with the guide as a lead magnet</div>
+                        <div class="track-item">Have public conversations with your audience about their struggles</div>
+                        <div class="track-item">Show visible progress and results — your own brand building becomes
+                            proof</div>
+                        <div class="track-item">Position yourself as someone who has done the work, not just studied it
+                        </div>
+                    </div>
+                    <div class="track sell">
+                        <div class="track-label">Track B · Sell Your Product</div>
+                        <div class="track-title">Monetize the Journey</div>
+                        <div class="track-item">Week 1–4: Give away premium value for free to build an email list fast
+                        </div>
+                        <div class="track-item">Week 5–8: Tease the full product, open a waitlist, collect testimonials
+                        </div>
+                        <div class="track-item">Week 9–10: Pre-sell to waitlist at a 40% founder discount</div>
+                        <div class="track-item">Week 11: Full public launch to email list and social audience</div>
+                        <div class="track-item">Week 12+: Evergreen funnel running continuously from lead magnet → sale
+                        </div>
+                        <div class="track-item">Month 4+: Add coaching upsell for buyers who want hands-on help</div>
+                    </div>
+                </div>
+
+                <div
+                    style="margin-top:24px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px;display:flex;gap:20px;align-items:flex-start;">
+                    <div style="font-size:24px;flex-shrink:0;">💡</div>
+                    <div>
+                        <div style="font-weight:700;font-size:15px;margin-bottom:8px;color:var(--gold);">The Key Insight
+                        </div>
+                        <div style="font-size:14px;color:var(--muted2);line-height:1.8;">Every post you write to build
+                            your brand is also a marketing touchpoint for your product. Every email subscriber is a
+                            future buyer. Every public win you share is product proof. <strong
+                                style="color:var(--text);">You are not doing two things — you are doing one thing that
+                                creates two results.</strong> This is the compounding advantage of the build-in-public
+                            approach.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- 90 DAY PLAN -->
+    <section class="section" id="90days">
+        <div class="section-header">
+            <div class="eyebrow">03 — Execution</div>
+            <h2 class="title">Your Exact <em>90-Day</em><br>Week-by-Week Plan</h2>
+            <p class="subtitle">Every week has three things: what to build, what to post, and what to do for the
+                product. Follow this exactly. Don't improvise in Month 1.</p>
+        </div>
+
+        <div class="phase-tabs">
+            <button class="ptab active" onclick="switchPhase(this,'phase1')">Month 1 · Build</button>
+            <button class="ptab" onclick="switchPhase(this,'phase2')">Month 2 · Grow</button>
+            <button class="ptab" onclick="switchPhase(this,'phase3')">Month 3 · Launch</button>
+        </div>
+
+        <!-- MONTH 1 -->
+        <div class="phase-panel active" id="phase1">
+            <div class="week-grid">
+                <div class="week-row">
+                    <div class="week-cell" style="background:transparent;"></div>
+                    <div class="week-cell col-head build">Build Your Brand</div>
+                    <div class="week-cell col-head post">What to Post Daily</div>
+                    <div class="week-cell col-head sell">Product Action</div>
+                </div>
+                <div class="week-row">
+                    <div class="week-cell">
+                        <div class="week-label">Week</div>
+                        <div class="week-num">01</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Identity Sprint</div>
+                        <div class="cell-detail">Write transformation statement, origin story, 3 brand values,
+                            contrarian belief. This is foundational — do not skip or rush.</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">"Why I'm building in public"</div>
+                        <div class="cell-detail">Post your decision to build a personal brand publicly. Be vulnerable.
+                            Share your starting point. This is post #1.</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Set up Gumroad + Beehiiv</div>
+                        <div class="cell-detail">Create accounts. Don't list anything yet. Just have infrastructure
+                            ready. Set up your email welcome sequence.</div>
+                    </div>
+                </div>
+                <div class="week-row">
+                    <div class="week-cell">
+                        <div class="week-label">Week</div>
+                        <div class="week-num">02</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Visual Identity</div>
+                        <div class="cell-detail">Choose colors, fonts, photo style. Build 6 content templates in Canva.
+                            Take brand photos if possible. Set up all social profiles consistently.</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">"My personal brand philosophy"</div>
+                        <div class="cell-detail">Share your contrarian belief. Post your origin story. Share your brand
+                            values. Tell people exactly what you stand for.</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Create lead magnet v1</div>
+                        <div class="cell-detail">Give away 10 pages of the brand guide as a free PDF. Simple Canva
+                            design. Set up the automated email delivery.</div>
+                    </div>
+                </div>
+                <div class="week-row">
+                    <div class="week-cell">
+                        <div class="week-label">Week</div>
+                        <div class="week-num">03</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Platform Setup</div>
+                        <div class="cell-detail">Go all-in on ONE platform (LinkedIn recommended for personal growth +
+                            B2B). Optimize profile fully. Write your about section like a landing page.</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Teaching posts begin</div>
+                        <div class="cell-detail">Share 1 insight from the brand guide daily. "One thing most people get
+                            wrong about personal branding." Lead with value, not promotion.</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Promote lead magnet</div>
+                        <div class="cell-detail">Post about the free PDF. Add it to your bio link. Aim for first 50
+                            email subscribers this week.</div>
+                    </div>
+                </div>
+                <div class="week-row">
+                    <div class="week-cell">
+                        <div class="week-label">Week</div>
+                        <div class="week-num">04</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Content System Live</div>
+                        <div class="cell-detail">Batch create 2 weeks of content. Set up scheduling (Buffer or
+                            Typefully). Send your first weekly newsletter. Establish the habit before you need it.</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">"Month 1 results" post</div>
+                        <div class="cell-detail">Share exactly what you did and what happened. Even small wins. "I wrote
+                            my brand identity. Here's what I learned." Transparency builds trust fast.</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Survey your email list</div>
+                        <div class="cell-detail">Send 1 email: "What's your biggest struggle with personal branding?"
+                            Use replies to shape your product positioning. Real answers = real copy.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MONTH 2 -->
+        <div class="phase-panel" id="phase2">
+            <div class="week-grid">
+                <div class="week-row">
+                    <div class="week-cell" style="background:transparent;"></div>
+                    <div class="week-cell col-head build">Build Your Brand</div>
+                    <div class="week-cell col-head post">What to Post Daily</div>
+                    <div class="week-cell col-head sell">Product Action</div>
+                </div>
+                <div class="week-row">
+                    <div class="week-cell">
+                        <div class="week-label">Week</div>
+                        <div class="week-num">05</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Audience Conversations</div>
+                        <div class="cell-detail">Have 20 DM conversations with your ideal audience. Ask about their
+                            biggest brand struggles. These become your testimonials, case studies, and copy.</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Behind-the-scenes posts</div>
+                        <div class="cell-detail">Share your actual work: "Here's the brand guide I'm building. Here's
+                            what's inside." Teaser content that makes people want the full product.</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Finalize product name + price</div>
+                        <div class="cell-detail">Choose your product name. Set your launch price at $47. Create the
+                            product listing page on Gumroad but keep it hidden.</div>
+                    </div>
+                </div>
+                <div class="week-row">
+                    <div class="week-cell">
+                        <div class="week-label">Week</div>
+                        <div class="week-num">06</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Authority Content</div>
+                        <div class="cell-detail">Write your first "pillar post" — your most comprehensive piece of
+                            content. "The complete guide to X." This is your most shared and referenced piece.</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Framework reveal</div>
+                        <div class="cell-detail">Share your methodology publicly. "The 5-phase system I use to build
+                            personal brands." Give it freely. The product is the implementation guide.</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Open waitlist</div>
+                        <div class="cell-detail">Email your list: "I'm building something. Get early access + 40% off."
+                            Create a simple Typeform. Goal: 20+ waitlist signups this week.</div>
+                    </div>
+                </div>
+                <div class="week-row">
+                    <div class="week-cell">
+                        <div class="week-label">Week</div>
+                        <div class="week-num">07</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Proof Architecture</div>
+                        <div class="cell-detail">Help 3 people implement the brand guide for free. Document their
+                            results. These become your case studies and the most powerful marketing asset you'll ever
+                            have.</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Case study posts</div>
+                        <div class="cell-detail">Share the results of the people you helped. "I helped [person] build
+                            their brand identity in a weekend. Here's exactly what we did." Real results = real proof.
+                        </div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Write sales page</div>
+                        <div class="cell-detail">Lead with transformation, not features. Use your audience's exact words
+                            from Week 4 survey. Include the case studies from this week. Draft only — no launch yet.
+                        </div>
+                    </div>
+                </div>
+                <div class="week-row">
+                    <div class="week-cell">
+                        <div class="week-label">Week</div>
+                        <div class="week-num">08</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Email List Growth Push</div>
+                        <div class="cell-detail">Run a "free challenge" or workshop for your audience. 3-day mini event
+                            on personal branding. Goal: double your email list this week through event signups.</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">"What I've learned" series</div>
+                        <div class="cell-detail">Post a 5-part series: one key lesson from each phase of the brand
+                            guide. Each post is a preview of the full product without giving everything away.</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Pre-sell to waitlist</div>
+                        <div class="cell-detail">Email your waitlist: "You're getting 40% off for believing in this
+                            early." Send the Gumroad link. Goal: first 10 paid sales this week.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MONTH 3 -->
+        <div class="phase-panel" id="phase3">
+            <div class="week-grid">
+                <div class="week-row">
+                    <div class="week-cell" style="background:transparent;"></div>
+                    <div class="week-cell col-head build">Build Your Brand</div>
+                    <div class="week-cell col-head post">What to Post Daily</div>
+                    <div class="week-cell col-head sell">Product Action</div>
+                </div>
+                <div class="week-row">
+                    <div class="week-cell">
+                        <div class="week-label">Week</div>
+                        <div class="week-num">09</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Pre-launch build-up</div>
+                        <div class="cell-detail">Post about the product every day this week. Share testimonials from
+                            beta users, screenshots of the guide, behind-the-scenes of how it was made. Create urgency
+                            without being pushy.</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Launch countdown posts</div>
+                        <div class="cell-detail">"5 days until the full launch." "Here's what's inside." "Here's what
+                            [person] said after using it." Daily social proof drip leading to launch day.</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Launch week prep</div>
+                        <div class="cell-detail">Write 5 launch emails. Finalize pricing ($47 public, $27 for existing
+                            subscribers). Set up coupon code. Prepare all social graphics. Have everything ready by
+                            Friday.</div>
+                    </div>
+                </div>
+                <div class="week-row">
+                    <div class="week-cell">
+                        <div class="week-label">Week</div>
+                        <div class="week-num">10</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">LAUNCH WEEK</div>
+                        <div class="cell-detail">This is it. Every action this week is about driving traffic to the
+                            sales page. Post more than usual. Reply to every comment. Be everywhere. You've earned this.
+                        </div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">5-day launch sequence</div>
+                        <div class="cell-detail">Day 1: Launch announcement. Day 2: Deep dive into the transformation.
+                            Day 3: Case study. Day 4: FAQ + objection handling. Day 5: Last chance + close.</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">5-email launch sequence</div>
+                        <div class="cell-detail">Mirror your social content. Email 1: Launch. Email 2: Why this exists.
+                            Email 3: Testimonial. Email 4: Bonus + urgency. Email 5: Last day. Price rises in 24 hours.
+                        </div>
+                    </div>
+                </div>
+                <div class="week-row">
+                    <div class="week-cell">
+                        <div class="week-label">Week</div>
+                        <div class="week-num">11</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Post-launch debrief</div>
+                        <div class="cell-detail">Share your launch results publicly. Be transparent about numbers — even
+                            if modest. "Here's what I made on my first product launch." This is your most-shared content
+                            type.</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">"I launched. Here's what happened."</div>
+                        <div class="cell-detail">Share exact numbers, what worked, what failed, what surprised you.
+                            Nothing builds credibility faster than radical transparency about real results.</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Set up evergreen funnel</div>
+                        <div class="cell-detail">Connect lead magnet → email welcome sequence → product offer. This now
+                            runs automatically. Every new subscriber enters the funnel and sees the product offer.</div>
+                    </div>
+                </div>
+                <div class="week-row">
+                    <div class="week-cell">
+                        <div class="week-label">Week</div>
+                        <div class="week-num">12</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Plan Month 4–6</div>
+                        <div class="cell-detail">Design next offer: add a coaching upsell ($297) for buyers who want
+                            hands-on help. Start podcast guest outreach. Plan your first cohort or workshop. The brand
+                            is real now.</div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">"My 90-day build-in-public recap"</div>
+                        <div class="cell-detail">One long-form post documenting the entire journey. Week 1 to Week 12.
+                            This single post will be your most engaged piece and will attract your next 500 followers.
+                        </div>
+                    </div>
+                    <div class="week-cell">
+                        <div class="cell-task">Add coaching upsell</div>
+                        <div class="cell-detail">Email buyers: "Want my help implementing this personally? I'm taking 3
+                            clients at $297." Even 2 yes responses = $594 additional revenue from your existing buyers.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- BUILD IN PUBLIC CONTENT -->
+    <section class="section">
+        <div class="section-header">
+            <div class="eyebrow">04 — Content Engine</div>
+            <h2 class="title">The "Build in Public"<br><em>Post Formulas</em></h2>
+            <p class="subtitle">These are the exact types of posts that simultaneously build your brand and sell your
+                product. Use all 8 weekly.</p>
+        </div>
+
+        <div class="content-engine">
+            <div class="post-formula">
+                <div class="pf-head">
+                    <div class="pf-title">Post Library</div>
+                    <div class="pf-sub">8 Formulas That Do Both</div>
+                </div>
+                <div class="formula-item">
+                    <div class="fi-num">01</div>
+                    <div>
+                        <div class="fi-name">The Progress Update</div>
+                        <div class="fi-template">"Week [X] of building my personal brand from zero. Here's what
+                            happened..."</div>
+                        <div class="fi-goal">BUILDS: Trust · SELLS: Social proof journey</div>
+                    </div>
+                </div>
+                <div class="formula-item">
+                    <div class="fi-num">02</div>
+                    <div>
+                        <div class="fi-name">The Lesson Extracted</div>
+                        <div class="fi-template">"I spent [X hours] studying personal branding. Here are the 5 things no
+                            one talks about..."</div>
+                        <div class="fi-goal">BUILDS: Authority · SELLS: Product teaser</div>
+                    </div>
+                </div>
+                <div class="formula-item">
+                    <div class="fi-num">03</div>
+                    <div>
+                        <div class="fi-name">The Mistake Confession</div>
+                        <div class="fi-template">"I made a mistake building my brand this week. Here's what I learned
+                            and what I'd do differently..."</div>
+                        <div class="fi-goal">BUILDS: Relatability · SELLS: Authenticity</div>
+                    </div>
+                </div>
+                <div class="formula-item">
+                    <div class="fi-num">04</div>
+                    <div>
+                        <div class="fi-name">The Framework Reveal</div>
+                        <div class="fi-template">"The [Name] system I built for personal branding. 5 phases, explained
+                            in 5 minutes..."</div>
+                        <div class="fi-goal">BUILDS: Expertise · SELLS: Direct preview</div>
+                    </div>
+                </div>
+                <div class="formula-item">
+                    <div class="fi-num">05</div>
+                    <div>
+                        <div class="fi-name">The Result Share</div>
+                        <div class="fi-template">"I helped [person] apply phase 1 of my system. Here's exactly what
+                            changed for them in 7 days..."</div>
+                        <div class="fi-goal">BUILDS: Proof · SELLS: Case study</div>
+                    </div>
+                </div>
+                <div class="formula-item">
+                    <div class="fi-num">06</div>
+                    <div>
+                        <div class="fi-name">The Contrarian Take</div>
+                        <div class="fi-template">"Everyone says build your audience first. I disagree. Here's why that
+                            advice is backwards..."</div>
+                        <div class="fi-goal">BUILDS: Thought leadership · SELLS: Positioning</div>
+                    </div>
+                </div>
+                <div class="formula-item">
+                    <div class="fi-num">07</div>
+                    <div>
+                        <div class="fi-name">The Behind-the-Scenes</div>
+                        <div class="fi-template">"Here's the actual resource I built for personal branding. 14 modules,
+                            100+ action items. I'm selling it for $47..."</div>
+                        <div class="fi-goal">BUILDS: Transparency · SELLS: Direct</div>
+                    </div>
+                </div>
+                <div class="formula-item">
+                    <div class="fi-num">08</div>
+                    <div>
+                        <div class="fi-name">The Question Post</div>
+                        <div class="fi-template">"What's the #1 thing that's stopped you from building your personal
+                            brand? I'm building something to fix this..."</div>
+                        <div class="fi-goal">BUILDS: Engagement · SELLS: Research + waitlist</div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3
+                    style="font-family:'Instrument Serif',serif;font-size:24px;letter-spacing:-0.5px;margin-bottom:20px;">
+                    Real Post Examples</h3>
+                <p style="font-size:13px;color:var(--muted2);margin-bottom:20px;line-height:1.8;">These are actual posts
+                    that work. Model the structure. Swap in your context.</p>
+                <div class="bip-grid">
+                    <div class="bip-card">
+                        <div class="bip-week">Week 1 Post</div>
+                        <div class="bip-post">"I'm starting from zero. No audience. No product. Just a system I believe
+                            in. I'm documenting everything publicly. Follow along if you want to see what's possible."
+                        </div>
+                        <div class="bip-result">→ Avg: 200–800 impressions, 20–60 follows</div>
+                    </div>
+                    <div class="bip-card">
+                        <div class="bip-week">Week 4 Post</div>
+                        <div class="bip-post">"Month 1 done. 0 → 312 followers. 0 → 87 email subscribers. 0 → $0
+                            revenue. Here's every single thing I did and what worked."</div>
+                        <div class="bip-result">→ Avg: 2K–8K impressions, highest engagement post</div>
+                    </div>
+                    <div class="bip-card">
+                        <div class="bip-week">Week 8 Post</div>
+                        <div class="bip-post">"I spent 3 months building the most complete personal brand guide I could.
+                            It's 14 modules, 100+ checklists, a full funnel. I'm opening a waitlist. $47 at launch."
+                        </div>
+                        <div class="bip-result">→ Avg: First 10–30 waitlist signups</div>
+                    </div>
+                    <div class="bip-card">
+                        <div class="bip-week">Week 10 Post</div>
+                        <div class="bip-post">"Today I launched my first digital product. 31 sales on day one. I want to
+                            show you exactly what I did — because 3 months ago I had zero followers."</div>
+                        <div class="bip-result">→ Avg: Most viral post. 5K–25K impressions</div>
+                    </div>
+                    <div class="bip-card">
+                        <div class="bip-week">Week 12 Post</div>
+                        <div class="bip-post">"90-day build-in-public recap. Started: 0 followers, 0 revenue. Today:
+                            1,847 followers, 623 subscribers, $2,340 revenue. Full breakdown thread ↓"</div>
+                        <div class="bip-result">→ Avg: Best-performing post of the year</div>
+                    </div>
+                    <div class="bip-card">
+                        <div class="bip-week">Evergreen Post</div>
+                        <div class="bip-post">"I helped someone go from no brand to their first 500 followers in 30
+                            days. Here's the exact 5-step system we used. (Same system inside my $47 guide.)"</div>
+                        <div class="bip-result">→ Drives continuous evergreen sales</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- PLATFORM -->
+    <section class="section">
+        <div class="section-header">
+            <div class="eyebrow">05 — Platform Choice</div>
+            <h2 class="title">Where to <em>Start</em><br>with Zero Audience</h2>
+            <p class="subtitle">Starting from zero means platform choice matters more — you need organic reach, not
+                pay-to-play. This is the ranked order for personal growth brands in 2026.</p>
+        </div>
+
+        <div class="platform-rec" style="border-color:var(--gold);">
+            <div class="plat-icon" style="background:rgba(212,168,67,0.08);">💼</div>
+            <div>
+                <div class="plat-name">LinkedIn <span
+                        style="font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--gold);"> · Start
+                        here</span></div>
+                <div class="plat-why">Organic reach is still exceptional for zero-follower accounts in 2026. One great
+                    post can reach 5,000–50,000 people with 0 followers. Personal growth content performs at the highest
+                    rate. Buyers live here. Decision-makers live here. Direct messaging is professional and welcomed.
+                    <strong style="color:var(--text);">This is your primary platform.</strong></div>
+            </div>
+            <div class="plat-right">
+                <div class="plat-priority priority-1">Priority 1</div>
+                <div class="plat-start">Start: Day 1</div>
+            </div>
+        </div>
+
+        <div class="platform-rec">
+            <div class="plat-icon" style="background:rgba(58,138,90,0.08);">✉️</div>
+            <div>
+                <div class="plat-name">Email Newsletter (Beehiiv)</div>
+                <div class="plat-why">Start your list on Day 1 — even before you have content. Your email list is the
+                    only asset you truly own. Use your brand guide as the lead magnet. Every subscriber is 10× more
+                    valuable than a social follower. A list of 500 engaged subscribers outperforms 10,000 social
+                    followers for product sales.</div>
+            </div>
+            <div class="plat-right">
+                <div class="plat-priority priority-1">Priority 1</div>
+                <div class="plat-start">Start: Day 1</div>
+            </div>
+        </div>
+
+        <div class="platform-rec">
+            <div class="plat-icon" style="background:rgba(255,255,255,0.04);">🐦</div>
+            <div>
+                <div class="plat-name">X (Twitter)</div>
+                <div class="plat-why">Excellent for building in public. The "build in public" community is concentrated
+                    here. Daily posting builds visibility fast. Repurpose your LinkedIn posts as shorter X threads. Add
+                    after Week 4 when you have a content system running, not before.</div>
+            </div>
+            <div class="plat-right">
+                <div class="plat-priority priority-2">Priority 2</div>
+                <div class="plat-start">Start: Week 5</div>
+            </div>
+        </div>
+
+        <div class="platform-rec">
+            <div class="plat-icon" style="background:rgba(255,255,255,0.04);">📸</div>
+            <div>
+                <div class="plat-name">Instagram / TikTok</div>
+                <div class="plat-why">Add these only after your primary platform is working. Repurpose your LinkedIn
+                    content as short-form videos. Do not create original content for these — just repurpose. Starting
+                    here from zero is the most common mistake: high effort, low purchase intent audience.</div>
+            </div>
+            <div class="plat-right">
+                <div class="plat-priority priority-3">Priority 3</div>
+                <div class="plat-start">Start: Month 4+</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- PRODUCT LAUNCH PLAN -->
+    <section class="section" id="product">
+        <div class="section-header">
+            <div class="eyebrow">06 — Product Launch</div>
+            <h2 class="title">How to Launch Your<br><em>First Product</em> Right</h2>
+            <p class="subtitle">A step-by-step launch plan for someone with no audience and no track record. Designed
+                specifically for your situation.</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 360px;gap:48px;align-items:start;">
+            <div class="launch-timeline">
+                <div class="lt-item">
+                    <div class="lt-dot filled"></div>
+                    <div class="lt-when">Day 1 · Infrastructure</div>
+                    <div class="lt-title">Set Up Before You Need It</div>
+                    <div class="lt-body">Create accounts everywhere before you have followers, not after. Changing your
+                        setup mid-momentum is costly. <strong>15 minutes of setup now saves 15 hours later.</strong>
+                    </div>
+                    <div class="lt-tasks">
+                        <div class="lt-task">Beehiiv account — email list infrastructure</div>
+                        <div class="lt-task">Gumroad account — product delivery and payments</div>
+                        <div class="lt-task">LinkedIn + X profiles — fully optimized with brand identity</div>
+                        <div class="lt-task">Cal.com — free scheduling for future coaching calls</div>
+                    </div>
+                </div>
+
+                <div class="lt-item">
+                    <div class="lt-dot filled"></div>
+                    <div class="lt-when">Week 1–4 · List Building</div>
+                    <div class="lt-title">Build the Audience Before the Launch</div>
+                    <div class="lt-body">The biggest mistake is launching before you have an audience. Even a tiny email
+                        list of <strong>200–500 people who opted in</strong> for your lead magnet will outperform cold
+                        social promotion to 5,000 followers.</div>
+                    <div class="lt-tasks">
+                        <div class="lt-task">Create lead magnet: give away 10 pages of the brand guide free as a PDF
+                        </div>
+                        <div class="lt-task">Link the lead magnet in every post, bio, and comment reply</div>
+                        <div class="lt-task">Goal: 200+ email subscribers before opening waitlist</div>
+                        <div class="lt-task">Survey subscribers Week 4: "What's your #1 branding struggle?"</div>
+                    </div>
+                </div>
+
+                <div class="lt-item">
+                    <div class="lt-dot"></div>
+                    <div class="lt-when">Week 5–8 · Waitlist</div>
+                    <div class="lt-title">Open the Waitlist, Not the Product</div>
+                    <div class="lt-body">A waitlist does three things: <strong>validates demand, creates urgency, and
+                            gives you a warm list to launch to</strong>. People on the waitlist convert at 5–10× higher
+                        than cold audiences. Don't skip this step.</div>
+                    <div class="lt-tasks">
+                        <div class="lt-task">Email list: "I'm building something. Get 40% off as an early supporter."
+                        </div>
+                        <div class="lt-task">Post on LinkedIn: "Opening waitlist for my personal branding guide."</div>
+                        <div class="lt-task">Goal: 30–50 waitlist signups before launch</div>
+                        <div class="lt-task">Help 3 people for free to collect testimonials and case studies</div>
+                    </div>
+                </div>
+
+                <div class="lt-item">
+                    <div class="lt-dot"></div>
+                    <div class="lt-when">Week 9–10 · Pre-Sale</div>
+                    <div class="lt-title">Sell Before You Launch Publicly</div>
+                    <div class="lt-body">Email your waitlist the product link with the founder discount. <strong>This is
+                            your first revenue — and your first proof.</strong> Even 10 sales at $27 = $270 and infinite
+                        confidence. Real buyers before launch = real momentum at launch.</div>
+                    <div class="lt-tasks">
+                        <div class="lt-task">Email waitlist: product link at $27 (40% off launch price)</div>
+                        <div class="lt-task">Deadline: 48 hours at the founder price only</div>
+                        <div class="lt-task">Follow up with non-openers 24 hours later</div>
+                        <div class="lt-task">Collect testimonials from early buyers immediately</div>
+                    </div>
+                </div>
+
+                <div class="lt-item">
+                    <div class="lt-dot"></div>
+                    <div class="lt-when">Week 10 · Launch Day</div>
+                    <div class="lt-title">Public Launch to Full Audience</div>
+                    <div class="lt-body">Launch price: $47. Launch window: 5 days only, then price goes to $67 forever.
+                        <strong>Urgency drives decisions.</strong> Without a deadline, people don't buy — they bookmark
+                        and forget. Every day of the launch send one email and post three times.</div>
+                    <div class="lt-tasks">
+                        <div class="lt-task">5-email launch sequence (written in Week 9)</div>
+                        <div class="lt-task">Daily posts: announcement → story → proof → FAQ → last chance</div>
+                        <div class="lt-task">Reply to every single comment personally. Be a human, not a brand.</div>
+                        <div class="lt-task">DM everyone who engages but hasn't bought</div>
+                    </div>
+                </div>
+
+                <div class="lt-item">
+                    <div class="lt-dot"></div>
+                    <div class="lt-when">Week 11+ · Evergreen</div>
+                    <div class="lt-title">The Machine That Runs Forever</div>
+                    <div class="lt-body">After launch, set up the evergreen funnel: every new email subscriber gets the
+                        lead magnet → welcome sequence → product offer. <strong>This runs automatically while you focus
+                            on building the audience.</strong> Add the coaching upsell to buyers.</div>
+                    <div class="lt-tasks">
+                        <div class="lt-task">Evergreen email sequence: lead magnet → 3 value emails → product offer
+                        </div>
+                        <div class="lt-task">Coaching upsell email to all buyers: 1:1 help at $297</div>
+                        <div class="lt-task">Post launch debrief publicly — this will be your most viral content</div>
+                        <div class="lt-task">Start planning next offer: group workshop at $197</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRICING SIDEBAR -->
+            <div>
+                <h3
+                    style="font-family:'Instrument Serif',serif;font-size:22px;letter-spacing:-0.5px;margin-bottom:20px;">
+                    Pricing Strategy</h3>
+                <div style="display:flex;flex-direction:column;gap:12px;">
+                    <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;">
+                        <div
+                            style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">
+                            Lead Magnet</div>
+                        <div
+                            style="font-family:'Instrument Serif',serif;font-size:32px;color:var(--green);font-style:italic;line-height:1;margin-bottom:6px;">
+                            Free</div>
+                        <div style="font-size:12px;color:var(--muted2);">10-page preview PDF. Gives massive value,
+                            captures email. Never charge for this.</div>
+                    </div>
+                    <div style="background:var(--card);border:1px solid var(--gold);border-radius:10px;padding:20px;">
+                        <div
+                            style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:8px;">
+                            Founder Price · Week 9</div>
+                        <div
+                            style="font-family:'Instrument Serif',serif;font-size:32px;color:var(--gold);font-style:italic;line-height:1;margin-bottom:6px;">
+                            $27</div>
+                        <div style="font-size:12px;color:var(--muted2);">Waitlist only. 40% off. Rewards early
+                            believers. Creates first buyers and testimonials.</div>
+                    </div>
+                    <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;">
+                        <div
+                            style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">
+                            Launch Price · Week 10</div>
+                        <div
+                            style="font-family:'Instrument Serif',serif;font-size:32px;color:var(--text);font-style:italic;line-height:1;margin-bottom:6px;">
+                            $47</div>
+                        <div style="font-size:12px;color:var(--muted2);">5-day launch window only. Creates urgency.
+                            Price rises after launch closes.</div>
+                    </div>
+                    <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;">
+                        <div
+                            style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">
+                            Evergreen Price · Week 11+</div>
+                        <div
+                            style="font-family:'Instrument Serif',serif;font-size:32px;color:var(--text);font-style:italic;line-height:1;margin-bottom:6px;">
+                            $67</div>
+                        <div style="font-size:12px;color:var(--muted2);">Permanent price. Makes launch buyers feel like
+                            they got a deal. Increases perceived value.</div>
+                    </div>
+                    <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;">
+                        <div
+                            style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">
+                            Coaching Upsell · Month 4</div>
+                        <div
+                            style="font-family:'Instrument Serif',serif;font-size:32px;color:var(--text);font-style:italic;line-height:1;margin-bottom:6px;">
+                            $297</div>
+                        <div style="font-size:12px;color:var(--muted2);">1:1 implementation help. Offered to all product
+                            buyers. 2 sessions. High margin, high impact.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- REVENUE PROJECTION -->
+    <section class="section" id="revenue">
+        <div class="section-header">
+            <div class="eyebrow">07 — Revenue</div>
+            <h2 class="title">Realistic Revenue<br><em>Projections</em></h2>
+            <p class="subtitle">Conservative numbers based on a zero-audience start. These assume consistent execution —
+                not perfection.</p>
+        </div>
+
+        <div class="revenue-table" style="margin-bottom:48px;">
+            <div class="rt-head">
+                <div class="rt-h">Month</div>
+                <div class="rt-h">Activity</div>
+                <div class="rt-h">Revenue</div>
+                <div class="rt-h">Subscribers</div>
+                <div class="rt-h">Type</div>
+            </div>
+            <div class="rt-row">
+                <div class="rt-cell month">M1</div>
+                <div class="rt-cell product">Brand building only — zero monetization</div>
+                <div class="rt-cell revenue" style="color:var(--muted2);font-size:16px;">$0</div>
+                <div class="rt-cell">0 → 150</div>
+                <div class="rt-cell"><span class="tag green">Investing</span></div>
+            </div>
+            <div class="rt-row">
+                <div class="rt-cell month">M2</div>
+                <div class="rt-cell product">Waitlist opens + pre-sales to 30 early buyers</div>
+                <div class="rt-cell revenue">$810</div>
+                <div class="rt-cell">150 → 400</div>
+                <div class="rt-cell"><span class="tag gold">Pre-Sale</span></div>
+            </div>
+            <div class="rt-row">
+                <div class="rt-cell month">M3</div>
+                <div class="rt-cell product">Public launch ($47) + evergreen begins</div>
+                <div class="rt-cell revenue">$2,350</div>
+                <div class="rt-cell">400 → 800</div>
+                <div class="rt-cell"><span class="tag gold">Launch</span></div>
+            </div>
+            <div class="rt-row">
+                <div class="rt-cell month">M4</div>
+                <div class="rt-cell product">Evergreen ($67) + coaching upsell ($297)</div>
+                <div class="rt-cell revenue">$1,800</div>
+                <div class="rt-cell">800 → 1,200</div>
+                <div class="rt-cell"><span class="tag green">Evergreen</span></div>
+            </div>
+            <div class="rt-row">
+                <div class="rt-cell month">M5</div>
+                <div class="rt-cell product">Workshop launch ($197) + product evergreen</div>
+                <div class="rt-cell revenue">$3,100</div>
+                <div class="rt-cell">1,200 → 1,800</div>
+                <div class="rt-cell"><span class="tag gold">Launch</span></div>
+            </div>
+            <div class="rt-row">
+                <div class="rt-cell month">M6</div>
+                <div class="rt-cell product">All offers running + first coaching client</div>
+                <div class="rt-cell revenue">$4,500</div>
+                <div class="rt-cell">1,800 → 2,500</div>
+                <div class="rt-cell"><span class="tag green">Scaling</span></div>
+            </div>
+            <div class="rt-foot">
+                <div class="rt-cell month" style="font-weight:800;">6 Mo</div>
+                <div class="rt-cell product">Total conservative 6-month revenue</div>
+                <div class="rt-cell revenue">$12,560</div>
+                <div class="rt-cell">2,500 subs</div>
+                <div class="rt-cell"></div>
+            </div>
+        </div>
+
+        <div
+            style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:32px;display:flex;gap:20px;align-items:flex-start;">
+            <div style="font-size:28px;flex-shrink:0;">⚠️</div>
+            <div>
+                <div style="font-weight:700;font-size:15px;margin-bottom:8px;color:var(--gold);">Important Caveat</div>
+                <div style="font-size:14px;color:var(--muted2);line-height:1.8;">These numbers assume <strong
+                        style="color:var(--text);">consistent daily execution</strong> — posting every day, sending
+                    weekly emails, actively engaging with your audience, and running the launches as planned. Results
+                    vary significantly based on niche, content quality, and consistency. Some people exceed these in
+                    Month 2. Others take 6 months to hit the Month 3 numbers. <strong style="color:var(--text);">The
+                        only guarantee is that zero action = zero revenue.</strong></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- MISTAKES -->
+    <section class="section">
+        <div class="section-header">
+            <div class="eyebrow">08 — Avoid These</div>
+            <h2 class="title">The 8 Mistakes That<br><em>Kill</em> Zero-to-Launch Attempts</h2>
+        </div>
+
+        <div class="mistake-grid">
+            <div class="mistake-card">
+                <div class="mistake-num">1</div>
+                <div>
+                    <div class="mistake-title">Waiting to be "ready"</div>
+                    <div class="mistake-body">Perfection is a procrastination strategy. Post your first piece of content
+                        today. The imperfect published thing beats the perfect idea in your head every single time.
+                    </div>
+                </div>
+            </div>
+            <div class="mistake-card">
+                <div class="mistake-num">2</div>
+                <div>
+                    <div class="mistake-title">Building in private</div>
+                    <div class="mistake-body">If you build your product without telling anyone, you'll launch into
+                        silence. Build in public. Every stage of building is content and proof.</div>
+                </div>
+            </div>
+            <div class="mistake-card">
+                <div class="mistake-num">3</div>
+                <div>
+                    <div class="mistake-title">Starting on 4 platforms</div>
+                    <div class="mistake-body">Spreading thin across every platform from Day 1 produces mediocre results
+                        everywhere. One platform mastered deeply will always beat four platforms done poorly.</div>
+                </div>
+            </div>
+            <div class="mistake-card">
+                <div class="mistake-num">4</div>
+                <div>
+                    <div class="mistake-title">Skipping the lead magnet</div>
+                    <div class="mistake-body">Social followers are rented. Email subscribers are owned. If you're not
+                        converting followers into email subscribers from Week 1, you're building on someone else's land.
+                    </div>
+                </div>
+            </div>
+            <div class="mistake-card">
+                <div class="mistake-num">5</div>
+                <div>
+                    <div class="mistake-title">Pricing too low out of fear</div>
+                    <div class="mistake-body">A $7 product signals low value. $47 signals real investment. Price
+                        communicates quality — and low prices attract buyers who undervalue your work and overwhelm your
+                        support.</div>
+                </div>
+            </div>
+            <div class="mistake-card">
+                <div class="mistake-num">6</div>
+                <div>
+                    <div class="mistake-title">Launching without proof</div>
+                    <div class="mistake-body">Help 3 people for free before your launch. Get their testimonials. Use
+                        their exact words on your sales page. No proof = no trust = no sales, regardless of how good the
+                        product is.</div>
+                </div>
+            </div>
+            <div class="mistake-card">
+                <div class="mistake-num">7</div>
+                <div>
+                    <div class="mistake-title">No launch deadline</div>
+                    <div class="mistake-body">An open-ended offer is an offer people bookmark and never buy. Every
+                        launch needs a deadline: price goes up in 5 days. Without urgency, decisions are deferred
+                        indefinitely.</div>
+                </div>
+            </div>
+            <div class="mistake-card">
+                <div class="mistake-num">8</div>
+                <div>
+                    <div class="mistake-title">Stopping after launch</div>
+                    <div class="mistake-body">The launch is the beginning, not the end. Your evergreen funnel, coaching
+                        upsell, and next offer turn a one-time event into a recurring revenue engine. Plan Month 4
+                        before Month 3 ends.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- CTA -->
+    <section class="section" id="start">
+        <div class="cta-section">
+            <div class="inner">
+                <div class="eyebrow" style="justify-content:center;margin-bottom:20px;">The Only Move Left</div>
+                <h2>Day 1 starts<br><em>today.</em></h2>
+                <p>You have the guide. You have the plan. You have the pricing. The only variable left is whether you
+                    start today or next Monday. Next Monday never comes. Today does.</p>
+                <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+                    <button class="cta-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Read the 90-Day Plan
+                        Again</button>
+                </div>
+                <div style="margin-top:40px;display:flex;gap:48px;justify-content:center;flex-wrap:wrap;">
+                    <div style="text-align:center;">
+                        <div
+                            style="font-family:'Instrument Serif',serif;font-size:36px;font-style:italic;color:var(--gold);">
+                            Day 1</div>
+                        <div
+                            style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:4px;">
+                            Set up Beehiiv + LinkedIn</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <div
+                            style="font-family:'Instrument Serif',serif;font-size:36px;font-style:italic;color:var(--gold);">
+                            Day 7</div>
+                        <div
+                            style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:4px;">
+                            Lead magnet live</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <div
+                            style="font-family:'Instrument Serif',serif;font-size:36px;font-style:italic;color:var(--gold);">
+                            Day 60</div>
+                        <div
+                            style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:4px;">
+                            First sale</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <div
+                            style="font-family:'Instrument Serif',serif;font-size:36px;font-style:italic;color:var(--gold);">
+                            Day 90</div>
+                        <div
+                            style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:4px;">
+                            $1,000+ revenue</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="logo">Zero → Launch</div>
+        <p>90-Day Build-in-Public System · Starting from Zero · 2026</p>
+    </footer>
+
+    <script>
+        function switchPhase(btn, id) {
+            document.querySelectorAll('.ptab').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.phase-panel').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById(id).classList.add('active');
+        }
+
+        // Scroll-triggered nav active state
+        const sections = document.querySelectorAll('section[id]');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(s => {
+                if (window.scrollY >= s.offsetTop - 100) current = s.id;
+            });
+        });
+    </script>
+</body>
+
+</html>
