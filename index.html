@@ -29,6 +29,89 @@
             --red-pale: rgba(192, 64, 64, 0.08);
         }
 
+        [data-theme="light"] {
+            --void: #f8f6f0;
+            --surface: #f0eee5;
+            --card: #ffffff;
+            --card2: #f4f2e9;
+            --border: #e0dcd3;
+            --border2: #d4cfc4;
+            --text: #1a1a1a;
+            --muted: #8a857d;
+            --muted2: #6a665e;
+            --gold: #b38b2d;
+            --gold-pale: rgba(179, 139, 45, 0.08);
+            --gold-border: rgba(179, 139, 45, 0.2);
+            --green: #2c6e46;
+            --green-pale: rgba(44, 110, 70, 0.08);
+            --green-border: rgba(44, 110, 70, 0.2);
+            --red: #a33232;
+            --red-pale: rgba(163, 50, 50, 0.08);
+        }
+
+        [data-theme="light"] nav {
+            background: rgba(248, 246, 240, 0.92);
+        }
+
+        [data-theme="light"] .strategy-top p {
+            color: rgba(26, 26, 26, 0.6);
+        }
+
+        [data-theme="light"] .hero h1 .outline {
+            -webkit-text-stroke: 1px rgba(26, 26, 26, 0.3);
+            color: transparent;
+        }
+
+        [data-theme="light"] .mistake-num {
+            color: rgba(163, 50, 50, 0.2);
+        }
+
+        /* Elements to transition smoothly */
+        body, nav, .hero-pill, .reality-col, .strategy-block, .track, .ptab, .week-cell, .post-formula, 
+        .pf-head, .formula-item, .bip-card, .price-card, .revenue-table, .rt-head, .rt-row, .rt-foot, 
+        .platform-rec, .mistake-card, .cta-section, .section-divider {
+            transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
+        }
+
+        .nav-logo, .nav-links a, h1, h2, h3, h4, h5, p, div, span, strong, em, li, .icon, 
+        .label, .val, .track-item, .cell-task, .cell-detail, .fi-num, .fi-name, .fi-template, 
+        .bip-post, .lt-body, .lt-task, .price-name, .price-item, .rt-cell, .plat-name, .plat-why, 
+        .mistake-title, .mistake-body, .cta-section h2, .cta-section p, footer p {
+            transition: color 0.4s ease;
+        }
+
+        /* Theme Toggle Button */
+        .theme-btn {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            color: var(--text);
+        }
+        .theme-btn:hover {
+            background: var(--surface);
+            border-color: var(--border2);
+            transform: scale(1.05);
+        }
+
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -76,18 +159,29 @@
         /* NAV */
         nav {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 56px;
-            background: rgba(8, 8, 8, 0.92);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 80px); /* 40px margin on each side */
+            max-width: 1200px; /* Restrict width on very large screens */
+            height: 60px;
+            background: rgba(8, 8, 8, 0.75);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--border);
+            border-radius: 40px; /* Pill shape */
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 40px;
+            padding: 0 32px;
             z-index: 1000;
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.4);
+            transition: top 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease, border-color 0.4s ease;
+        }
+
+        /* Hide nav when scrolling down */
+        nav.nav-hidden {
+            top: -80px; 
         }
 
         .nav-logo {
@@ -101,34 +195,84 @@
         .nav-links {
             display: flex;
             gap: 32px;
+            align-items: center;
         }
 
         .nav-links a {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 500;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 8px 14px;
+            border-radius: 20px;
+            text-transform: capitalize;
             color: var(--muted2);
             text-decoration: none;
-            transition: color 0.2s;
+            transition: color 0.3s ease, background-color 0.3s ease;
         }
 
         .nav-links a:hover {
             color: var(--text);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        [data-theme="light"] .nav-links a:hover {
+            background-color: rgba(0, 0, 0, 0.05);
         }
 
         .nav-cta {
             background: var(--gold);
             color: var(--void) !important;
-            padding: 8px 18px;
-            border-radius: 4px;
+            padding: 10px 22px !important;
+            border-radius: 30px !important; /* Match pill shape */
             font-weight: 600 !important;
-            font-size: 11px !important;
+            font-size: 12px !important;
+            box-shadow: 0 4px 14px rgba(212, 168, 67, 0.25);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease !important;
         }
 
         .nav-cta:hover {
-            opacity: 0.9;
-            color: var(--void) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 168, 67, 0.4);
+            background-color: #e5b954; /* Slightly lighter gold */
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text);
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            border-radius: 2px;
+        }
+
+        /* Open State Animations */
+        nav.menu-open {
+            background: var(--surface) !important;
+            border-radius: 16px; 
+            height: auto;
+            padding-bottom: 24px;
+            align-items: flex-start;
+        }
+
+        .menu-toggle.open span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .menu-toggle.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.open span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
         }
 
         /* HERO */
@@ -503,7 +647,7 @@
             font-family: 'Instrument Serif', serif;
             font-size: 22px;
             margin-bottom: 16px;
-            letter---spacing: -0.3px;
+            letter-spacing: -0.3px;
         }
 
         .track-item {
@@ -1310,11 +1454,57 @@
         /* RESPONSIVE */
         @media (max-width: 900px) {
             nav {
-                padding: 0 24px;
+                width: calc(100% - 32px); /* 16px margins */
+                top: 16px;
+                padding: 16px 20px;
+                flex-wrap: wrap; 
+            }
+
+            .nav-logo {
+                flex: 1; 
+            }
+
+            .menu-toggle {
+                display: flex;
+                margin-left: 20px;
+                margin-top: 6px;
             }
 
             .nav-links {
-                display: none;
+                display: none; /* Hide default flex layout */
+                width: 100%;
+                flex-direction: column;
+                align-items: flex-start;
+                padding-top: 32px;
+                gap: 20px;
+            }
+
+            nav.menu-open .nav-links {
+                display: flex;
+            }
+
+            .nav-links a, .nav-links button {
+                width: 100%;
+                text-align: left;
+                padding: 12px 0;
+                border-bottom: 1px solid var(--border);
+                border-radius: 0;
+            }
+
+            .nav-links a:last-child {
+                border-bottom: none;
+            }
+
+            .nav-cta {
+                text-align: center !important;
+                padding: 14px 0 !important;
+            }
+
+            .theme-btn {
+                width: 100%;
+                justify-content: flex-start;
+                border-radius: 8px;
+                padding-left: 12px;
             }
 
             .hero {
@@ -1382,15 +1572,21 @@
 
 <body>
 
-    <nav>
+    <nav id="navbar">
         <div class="nav-logo">Zero → Launch</div>
-        <div class="nav-links">
+        <div class="nav-links" id="nav-links">
             <a href="#reality">Reality Check</a>
             <a href="#strategy">The Strategy</a>
             <a href="#90days">90-Day Plan</a>
             <a href="#product">Product Launch</a>
             <a href="#revenue">Revenue</a>
             <a href="#start" class="nav-cta">Start Now</a>
+            <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme"></button>
+        </div>
+        <div class="menu-toggle" id="mobile-menu">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
     </nav>
 
@@ -1427,7 +1623,7 @@
     <div class="section-divider"></div>
 
     <!-- REALITY CHECK -->
-    <section class="section" id="reality">
+    <section class="section reveal" id="reality">
         <div class="section-header">
             <div class="eyebrow">01 — Reality Check</div>
             <h2 class="title">The Honest Truth<br>About <em>Zero</em></h2>
@@ -1478,7 +1674,7 @@
     <div class="section-divider"></div>
 
     <!-- THE STRATEGY -->
-    <section class="section" id="strategy">
+    <section class="section reveal" id="strategy">
         <div class="section-header">
             <div class="eyebrow">02 — The Strategy</div>
             <h2 class="title">Run Both Tracks<br><em>Simultaneously</em></h2>
@@ -1546,7 +1742,7 @@
     <div class="section-divider"></div>
 
     <!-- 90 DAY PLAN -->
-    <section class="section" id="90days">
+    <section class="section reveal" id="90days">
         <div class="section-header">
             <div class="eyebrow">03 — Execution</div>
             <h2 class="title">Your Exact <em>90-Day</em><br>Week-by-Week Plan</h2>
@@ -1863,7 +2059,7 @@
     <div class="section-divider"></div>
 
     <!-- BUILD IN PUBLIC CONTENT -->
-    <section class="section">
+    <section class="section reveal">
         <div class="section-header">
             <div class="eyebrow">04 — Content Engine</div>
             <h2 class="title">The "Build in Public"<br><em>Post Formulas</em></h2>
@@ -2004,7 +2200,7 @@
     <div class="section-divider"></div>
 
     <!-- PLATFORM -->
-    <section class="section">
+    <section class="section reveal">
         <div class="section-header">
             <div class="eyebrow">05 — Platform Choice</div>
             <h2 class="title">Where to <em>Start</em><br>with Zero Audience</h2>
@@ -2076,7 +2272,7 @@
     <div class="section-divider"></div>
 
     <!-- PRODUCT LAUNCH PLAN -->
-    <section class="section" id="product">
+    <section class="section reveal" id="product">
         <div class="section-header">
             <div class="eyebrow">06 — Product Launch</div>
             <h2 class="title">How to Launch Your<br><em>First Product</em> Right</h2>
@@ -2244,7 +2440,7 @@
     <div class="section-divider"></div>
 
     <!-- REVENUE PROJECTION -->
-    <section class="section" id="revenue">
+    <section class="section reveal" id="revenue">
         <div class="section-header">
             <div class="eyebrow">07 — Revenue</div>
             <h2 class="title">Realistic Revenue<br><em>Projections</em></h2>
@@ -2329,7 +2525,7 @@
     <div class="section-divider"></div>
 
     <!-- MISTAKES -->
-    <section class="section">
+    <section class="section reveal">
         <div class="section-header">
             <div class="eyebrow">08 — Avoid These</div>
             <h2 class="title">The 8 Mistakes That<br><em>Kill</em> Zero-to-Launch Attempts</h2>
@@ -2412,7 +2608,7 @@
     <div class="section-divider"></div>
 
     <!-- CTA -->
-    <section class="section" id="start">
+    <section class="section reveal" id="start">
         <div class="cta-section">
             <div class="inner">
                 <div class="eyebrow" style="justify-content:center;margin-bottom:20px;">The Only Move Left</div>
@@ -2467,6 +2663,51 @@
     </footer>
 
     <script>
+        // Theme Toggle Logic
+        const themeBtn = document.getElementById('theme-toggle');
+        const htmlRoot = document.documentElement;
+        
+        // Initialize theme
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme === 'light') {
+            htmlRoot.setAttribute('data-theme', 'light');
+            themeBtn.textContent = '🌙';
+        } else {
+            themeBtn.textContent = '☀️';
+        }
+
+        themeBtn.addEventListener('click', () => {
+            if (htmlRoot.hasAttribute('data-theme')) {
+                htmlRoot.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'dark');
+                themeBtn.textContent = '☀️';
+            } else {
+                htmlRoot.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                themeBtn.textContent = '🌙';
+            }
+        });
+
+        // Scroll Reveal
+        const reveals = document.querySelectorAll('.reveal');
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const revealOnScroll = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        reveals.forEach(reveal => {
+            revealOnScroll.observe(reveal);
+        });
+
         function switchPhase(btn, id) {
             document.querySelectorAll('.ptab').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.phase-panel').forEach(p => p.classList.remove('active'));
@@ -2474,12 +2715,47 @@
             document.getElementById(id).classList.add('active');
         }
 
-        // Scroll-triggered nav active state
-        const sections = document.querySelectorAll('section[id]');
+        // Scroll-triggered dynamic nav show/hide
+        let lastScrollTop = 0;
+        const navbar = document.getElementById('navbar');
+        
         window.addEventListener('scroll', () => {
+            const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
+            
+            // Only hide the nav if the mobile menu isn't currently open
+            if (!navbar.classList.contains('menu-open')) {
+                if (currentScrollTop > lastScrollTop && currentScrollTop > 100) {
+                    // Scrolling DOWN past header - Hide Nav
+                    navbar.classList.add('nav-hidden');
+                } else if (currentScrollTop < lastScrollTop || currentScrollTop < 50) {
+                    // Scrolling UP - Show Nav
+                    navbar.classList.remove('nav-hidden');
+                }
+            }
+            
+            lastScrollTop = currentScrollTop;
+            
+            // Optional: highlight active section (keeping the existing logic)
             let current = '';
             sections.forEach(s => {
                 if (window.scrollY >= s.offsetTop - 100) current = s.id;
+            });
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.getElementById('nav-links');
+
+        mobileMenu.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            navbar.classList.toggle('menu-open');
+        });
+
+        // Close menu when a link is clicked
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                navbar.classList.remove('menu-open');
             });
         });
     </script>
