@@ -8,15 +8,15 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap"
         rel="stylesheet">
-        
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-NFHSKDYX2T"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-      gtag('config', 'G-NFHSKDYX2T');
+        gtag('config', 'G-NFHSKDYX2T');
     </script>
 
     <style>
@@ -418,11 +418,13 @@
             font-size: 14px;
             font-weight: 600;
             padding: 14px 28px;
-            border-radius: 30px; /* Pill */
+            border-radius: 30px;
+            /* Pill */
             text-decoration: none;
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
             cursor: pointer;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); /* Initial subtle float */
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            /* Initial subtle float */
         }
 
         .download-btn:hover {
@@ -1683,6 +1685,151 @@
             letter-spacing: 1px;
         }
 
+        /* EMAIL FORM */
+        .email-form {
+            padding: 32px;
+            width: 100%;
+            max-width: 480px;
+            text-align: left;
+            margin: 0 auto;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 16px;
+        }
+
+        .form-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-top: 6px;
+            color: var(--text);
+            font-family: 'Syne', sans-serif;
+            font-size: 14px;
+            transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        [data-theme="light"] .form-input {
+            background: rgba(255, 255, 255, 0.5);
+            color: var(--text);
+            border-color: var(--border2);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 0 2px var(--gold-pale);
+        }
+
+        [data-theme="light"] .form-input:focus {
+            background: #fff;
+        }
+
+        [data-theme="light"] .form-input::placeholder {
+            color: var(--muted2);
+        }
+
+        .submit-btn {
+            background: var(--gold);
+            color: var(--void);
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(212, 168, 67, 0.25);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 168, 67, 0.4);
+            background-color: #e5b954;
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(8, 8, 8, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        [data-theme="light"] .modal-overlay {
+            background: rgba(248, 246, 240, 0.8);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: var(--card);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--border);
+            border-top: 1px solid var(--border-highlight);
+            border-left: 1px solid var(--border-highlight);
+            border-radius: 24px;
+            padding: 40px;
+            width: 90%;
+            max-width: 480px;
+            position: relative;
+            transform: translateY(20px) scale(0.95);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--muted);
+            font-size: 28px;
+            line-height: 1;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+
+        .modal-close:hover {
+            color: var(--text);
+            background: var(--surface);
+        }
+
         /* RESPONSIVE */
         @media (max-width: 900px) {
             nav {
@@ -1845,9 +1992,11 @@
             <p class="hero-desc">You're starting with no audience — that is not a disadvantage. It is a blank canvas.
                 Here is the exact system to build your personal brand and sell your digital product simultaneously in 90
                 days.</p>
-            
+
             <div style="margin-bottom: 48px; opacity: 0; animation: fadeUp 0.8s ease 0.7s forwards;">
-                <a href="personal-brand-guide.pdf" onclick="gtag('event', 'Personal Brand Guide', { event_category: 'PDF', event_label: 'Brand Guide' });" download class="download-btn">
+                <a href="personal-brand-guide.pdf"
+                    onclick="gtag('event', 'download', { event_category: 'PDF', event_label: 'Brand Guide' });" download
+                    class="download-btn">
                     <span class="icon">↓</span> Download Free Guide
                 </a>
             </div>
@@ -1917,10 +2066,13 @@
                         building the final version</span></div>
             </div>
         </div>
-        
+
         <div style="margin-top: 48px; text-align: center; opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards;">
-            <p style="color: var(--muted2); margin-bottom: 16px; font-size: 14px;">Stop doing what everyone else does. Get the blueprint for what works.</p>
-            <a href="personal-brand-guide.pdf" onclick="gtag('event', 'Personal Brand Guide', { event_category: 'PDF', event_label: 'Brand Guide' });" download class="download-btn">
+            <p style="color: var(--muted2); margin-bottom: 16px; font-size: 14px;">Stop doing what everyone else does.
+                Get the blueprint for what works.</p>
+            <a href="personal-brand-guide.pdf"
+                onclick="gtag('event', 'download', { event_category: 'PDF', event_label: 'Brand Guide' });" download
+                class="download-btn">
                 <span class="icon">↓</span> Download Free Guide
             </a>
         </div>
@@ -1982,13 +2134,16 @@
                     <div>
                         <div style="font-weight:700;font-size:15px;margin-bottom:8px;color:var(--gold);">The Key Insight
                         </div>
-                        <div style="font-size:14px;color:var(--text);line-height:1.8; margin-bottom: 24px;">Every post you write to build
+                        <div style="font-size:14px;color:var(--text);line-height:1.8; margin-bottom: 24px;">Every post
+                            you write to build
                             your brand is also a marketing touchpoint for your product. Every email subscriber is a
                             future buyer. Every public win you share is product proof. <strong
                                 style="color:var(--gold);">You are not doing two things — you are doing one thing that
                                 creates two results.</strong> This is the compounding advantage of the build-in-public
                             approach.</div>
-                        <a href="personal-brand-guide.pdf" onclick="gtag('event', 'Personal Brand Guide', { event_category: 'PDF', event_label: 'Brand Guide' });" download class="download-btn" style="font-size: 13px; padding: 10px 20px;">
+                        <a href="personal-brand-guide.pdf"
+                            onclick="gtag('event', 'download', { event_category: 'PDF', event_label: 'Brand Guide' });"
+                            download class="download-btn" style="font-size: 13px; padding: 10px 20px;">
                             <span class="icon">⤓</span> Get the Exact Templates We Use For This
                         </a>
                     </div>
@@ -2314,8 +2469,11 @@
         </div>
 
         <div style="margin-top: 48px; text-align: center; opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards;">
-            <p style="color: var(--muted2); margin-bottom: 16px; font-size: 14px;">Sound like a lot of work? Download the guide for the step-by-step checklists to make it easy.</p>
-            <a href="personal-brand-guide.pdf" onclick="gtag('event', 'Personal Brand Guide', { event_category: 'PDF', event_label: 'Brand Guide' });" download class="download-btn">
+            <p style="color: var(--muted2); margin-bottom: 16px; font-size: 14px;">Sound like a lot of work? Download
+                the guide for the step-by-step checklists to make it easy.</p>
+            <a href="personal-brand-guide.pdf"
+                onclick="gtag('event', 'download', { event_category: 'PDF', event_label: 'Brand Guide' });" download
+                class="download-btn">
                 <span class="icon">↓</span> Send Me The Checklists
             </a>
         </div>
@@ -2656,9 +2814,13 @@
                         <div
                             style="font-family:'Instrument Serif',serif;font-size:32px;color:var(--green);font-style:italic;line-height:1;margin-bottom:6px;">
                             Free</div>
-                        <div style="font-size:12px;color:var(--muted2);margin-bottom: 20px;">10-page preview PDF. Gives massive value,
+                        <div style="font-size:12px;color:var(--muted2);margin-bottom: 20px;">10-page preview PDF. Gives
+                            massive value,
                             captures email. Never charge for this.</div>
-                        <a href="personal-brand-guide.pdf" onclick="gtag('event', 'Personal Brand Guide', { event_category: 'PDF', event_label: 'Brand Guide' });" download class="download-btn" style="padding: 10px 20px; font-size: 13px; width: 100%; justify-content: center;">
+                        <a href="personal-brand-guide.pdf"
+                            onclick="gtag('event', 'download', { event_category: 'PDF', event_label: 'Brand Guide' });"
+                            download class="download-btn"
+                            style="padding: 10px 20px; font-size: 13px; width: 100%; justify-content: center;">
                             ↓ Download PDF
                         </a>
                     </div>
@@ -2886,10 +3048,15 @@
                 <p>You have the guide. You have the plan. You have the pricing. The only variable left is whether you
                     start today or next Monday. Next Monday never comes. Today does.</p>
                 <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-                    <a href="personal-brand-guide.pdf" onclick="gtag('event', 'Personal Brand Guide', { event_category: 'PDF', event_label: 'Brand Guide' });" download class="download-btn" style="padding: 16px 36px; font-size: 16px; box-shadow: 0 8px 32px rgba(212, 168, 67, 0.2);">
+                    <a href="personal-brand-guide.pdf"
+                        onclick="gtag('event', 'download', { event_category: 'PDF', event_label: 'Brand Guide' });"
+                        download class="download-btn"
+                        style="padding: 16px 36px; font-size: 16px; box-shadow: 0 8px 32px rgba(212, 168, 67, 0.2);">
                         <span class="icon">↓</span> Download Free Guide
                     </a>
                 </div>
+
+
                 <div style="margin-top:40px;display:flex;gap:48px;justify-content:center;flex-wrap:wrap;">
                     <div style="text-align:center;">
                         <div
@@ -2932,6 +3099,30 @@
         <div class="logo">Zero → Launch</div>
         <p>90-Day Build-in-Public System · Starting from Zero · 2026</p>
     </footer>
+
+    <!-- Email Gather Modal -->
+    <div class="modal-overlay" id="download-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="close-modal">&times;</button>
+            <form action="https://formspree.io/f/mkoqbylb" method="POST" id="lead-form" class="email-form"
+                style="padding: 0; margin: 0; width: 100%; border: none; background: transparent; backdrop-filter: none; box-shadow: none;">
+                <div style="margin-bottom: 24px; text-align: center;">
+                    <h3
+                        style="font-family: 'Instrument Serif', serif; font-size: 32px; font-style: italic; color: var(--gold); margin-bottom: 8px;">
+                        Almost there!</h3>
+                    <p style="font-size: 15px; color: var(--muted2);">Where should we send your free guide?</p>
+                </div>
+                <label class="form-label">
+                    Your email<span style="color:var(--red);">*</span>
+                    <input type="email" name="email" class="form-input" placeholder="you@example.com" required>
+                </label>
+                <button type="submit" class="submit-btn" id="modal-submit-btn"
+                    style="width: 100%; margin-top: 16px; font-size: 15px; padding: 16px;">Get the Guide Now</button>
+                <div id="form-feedback" style="margin-top: 16px; font-size: 14px; text-align: center; display: none;">
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script>
         // Theme Toggle Logic
@@ -3029,7 +3220,113 @@
                 navbar.classList.remove('menu-open');
             });
         });
+        // Download Modal Intercept Logic
+        const downloadModal = document.getElementById('download-modal');
+        const closeModalBtn = document.getElementById('close-modal');
+        const leadForm = document.getElementById('lead-form');
+        const formFeedback = document.getElementById('form-feedback');
+        const submitBtn = document.getElementById('modal-submit-btn');
+        let pendingDownloadUrl = '';
+
+        // Intercept all download links
+        document.querySelectorAll('a.download-btn').forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                pendingDownloadUrl = this.getAttribute('href');
+                downloadModal.classList.add('active');
+            });
+        });
+
+        // Close modal
+        closeModalBtn.addEventListener('click', () => {
+            downloadModal.classList.remove('active');
+            formFeedback.style.display = 'none';
+        });
+
+        // Close on background click
+        downloadModal.addEventListener('click', (e) => {
+            if (e.target === downloadModal) {
+                downloadModal.classList.remove('active');
+                formFeedback.style.display = 'none';
+            }
+        });
+
+        // Handle form submission via AJAX
+        leadForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(leadForm);
+
+            // UI feedback
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.7';
+
+            fetch(leadForm.action, {
+                method: leadForm.method,
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    submitBtn.textContent = 'Success! Downloading...';
+                    submitBtn.style.backgroundColor = 'var(--green)';
+
+                    // Trigger the download automatically
+                    if (pendingDownloadUrl) {
+                        const a = document.createElement('a');
+                        a.href = pendingDownloadUrl;
+                        a.download = '';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+
+                        // Optional: GTag event tracking if it was intercepted
+                        if (typeof gtag === 'function') {
+                            gtag('event', 'download', { event_category: 'PDF', event_label: 'Brand Guide' });
+                        }
+                    }
+
+                    // Close modal after a short delay
+                    setTimeout(() => {
+                        downloadModal.classList.remove('active');
+                        // Reset form
+                        leadForm.reset();
+                        submitBtn.textContent = 'Get the Guide Now';
+                        submitBtn.disabled = false;
+                        submitBtn.style.opacity = '1';
+                        submitBtn.style.backgroundColor = '';
+                    }, 2500);
+                } else {
+                    response.json().then(data => {
+                        if (Object.hasOwn(data, 'errors')) {
+                            formFeedback.textContent = data["errors"].map(error => error["message"]).join(", ");
+                        } else {
+                            formFeedback.textContent = "Oops! There was a problem submitting your form";
+                        }
+                        formFeedback.style.color = "var(--red)";
+                        formFeedback.style.display = "block";
+
+                        // Reset button
+                        submitBtn.textContent = 'Get the Guide Now';
+                        submitBtn.disabled = false;
+                        submitBtn.style.opacity = '1';
+                    });
+                }
+            }).catch(error => {
+                formFeedback.textContent = "Oops! There was a problem submitting your form";
+                formFeedback.style.color = "var(--red)";
+                formFeedback.style.display = "block";
+
+                // Reset button
+                submitBtn.textContent = 'Get the Guide Now';
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+            });
+        });
     </script>
+
 </body>
 
 </html>
